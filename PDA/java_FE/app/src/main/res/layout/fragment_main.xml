@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:isScrollContainer="true"
+        android:overScrollMode="always"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbars="vertical">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/space5">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="EDI"
+                android:textColor="@color/navy_blue"
+                android:textSize="@dimen/txt30"></TextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/lnPick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/space10"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:layout_width="@dimen/space30"
+                        android:layout_height="@dimen/space30"
+                        android:layout_gravity="center"
+                        android:background="@drawable/ic_baseline_lock_open_24"
+                        android:clickable="false" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:autoLink="email"
+                        android:gravity="center"
+                        android:linksClickable="true"
+                        android:text="PICK"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/facebook_color_1"
+                        android:textSize="@dimen/txt14" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lnPickLog"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/space10"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:layout_width="@dimen/space30"
+                        android:layout_height="@dimen/space30"
+                        android:layout_gravity="center"
+                        android:background="@drawable/ic_baseline_lock_open_24"
+                        android:clickable="false" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:autoLink="email"
+                        android:gravity="center"
+                        android:linksClickable="true"
+                        android:text="PICK Log"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/facebook_color_1"
+                        android:textSize="@dimen/txt14" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lnRePrint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/space10"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:layout_width="@dimen/space30"
+                        android:layout_height="@dimen/space30"
+                        android:layout_gravity="center"
+                        android:background="@drawable/ic_baseline_lock_open_24"
+                        android:clickable="false" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:autoLink="email"
+                        android:gravity="center"
+                        android:linksClickable="true"
+                        android:text="Reprint"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/facebook_color_1"
+                        android:textSize="@dimen/txt14" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/lnPickCheck"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/space10"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:layout_width="@dimen/space30"
+                        android:layout_height="@dimen/space30"
+                        android:layout_gravity="center"
+                        android:background="@drawable/ic_baseline_lock_open_24"
+                        android:clickable="false" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:autoLink="email"
+                        android:gravity="center"
+                        android:linksClickable="true"
+                        android:text="盘点"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/facebook_color_1"
+                        android:textSize="@dimen/txt14" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0.5dp"
+                android:layout_marginBottom="@dimen/space5"
+                android:background="@android:color/black"
+                android:visibility="gone" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

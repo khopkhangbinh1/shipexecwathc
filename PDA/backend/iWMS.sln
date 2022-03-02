@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29728.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iMWS.Api", "iMWS.Api\iMWS.Api.csproj", "{EE87F283-25BB-49FD-BAA7-EA1793B684E6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		ksdev|Any CPU = ksdev|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EE87F283-25BB-49FD-BAA7-EA1793B684E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE87F283-25BB-49FD-BAA7-EA1793B684E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE87F283-25BB-49FD-BAA7-EA1793B684E6}.ksdev|Any CPU.ActiveCfg = ksdev|Any CPU
+		{EE87F283-25BB-49FD-BAA7-EA1793B684E6}.ksdev|Any CPU.Build.0 = ksdev|Any CPU
+		{EE87F283-25BB-49FD-BAA7-EA1793B684E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE87F283-25BB-49FD-BAA7-EA1793B684E6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8139A40F-C10E-404A-BC5D-2668CB7EECE3}
+	EndGlobalSection
+EndGlobal

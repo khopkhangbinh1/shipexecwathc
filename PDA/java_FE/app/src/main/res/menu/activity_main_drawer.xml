@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_wms"
+            android:icon="@drawable/ic_baseline_calendar_today_24"
+            android:title="WMS" />
+        <item
+            android:id="@+id/nav_pick"
+            android:icon="@drawable/ic_baseline_create_24"
+            android:title="Pick" />
+        <item
+            android:id="@+id/nav_shipment"
+            android:icon="@drawable/ic_baseline_directions_car_24"
+            android:title="Shipment" />
+        <item
+            android:id="@+id/nav_upload856"
+            android:icon="@drawable/ic_baseline_cloud_upload_24"
+            android:title="Upload856" />
+    </group>
+</menu>

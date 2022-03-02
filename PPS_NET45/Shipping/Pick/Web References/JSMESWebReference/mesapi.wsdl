@@ -1,0 +1,827 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org.bill/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org.bill/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org.bill/">
+      <s:element name="GetMESStockInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Box" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMESStockInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetMESStockInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMESPNInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PN" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMESPNInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetMESPNInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMaterialTransferInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BoxID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMaterialTransferInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetMaterialTransferInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateStockINStatus">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Box" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateStockINStatusResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UpdateStockINStatusResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateReturnLineStatus">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Box" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateReturnLineStatusResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UpdateReturnLineStatusResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckPackOutLogic">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="json" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckPackOutLogicResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CheckPackOutLogicResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetWO">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="json" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetWOResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetWOResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSAPMIX_COLLECTION">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="json" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSAPMIX_COLLECTIONResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetSAPMIX_COLLECTIONResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSAPTransfer_WH">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="json" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSAPTransfer_WHResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetSAPTransfer_WHResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSAPAllocaDN">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="json" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSAPAllocaDNResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetSAPAllocaDNResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Transfer_RDdata">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Sn" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Transfer_RDdataResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetMesdata">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Json" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMesdataResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="SapDataToFox">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Json" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SapDataToFoxResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="string" nillable="true" type="s:string" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetMESStockInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetMESStockInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetMESStockInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetMESStockInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetMESPNInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetMESPNInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetMESPNInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetMESPNInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetMaterialTransferInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetMaterialTransferInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetMaterialTransferInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetMaterialTransferInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateStockINStatusSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateStockINStatus" />
+  </wsdl:message>
+  <wsdl:message name="UpdateStockINStatusSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateStockINStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateReturnLineStatusSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateReturnLineStatus" />
+  </wsdl:message>
+  <wsdl:message name="UpdateReturnLineStatusSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateReturnLineStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="CheckPackOutLogicSoapIn">
+    <wsdl:part name="parameters" element="tns:CheckPackOutLogic" />
+  </wsdl:message>
+  <wsdl:message name="CheckPackOutLogicSoapOut">
+    <wsdl:part name="parameters" element="tns:CheckPackOutLogicResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetWOSoapIn">
+    <wsdl:part name="parameters" element="tns:GetWO" />
+  </wsdl:message>
+  <wsdl:message name="GetWOSoapOut">
+    <wsdl:part name="parameters" element="tns:GetWOResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetSAPMIX_COLLECTIONSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSAPMIX_COLLECTION" />
+  </wsdl:message>
+  <wsdl:message name="GetSAPMIX_COLLECTIONSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSAPMIX_COLLECTIONResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetSAPTransfer_WHSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSAPTransfer_WH" />
+  </wsdl:message>
+  <wsdl:message name="GetSAPTransfer_WHSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSAPTransfer_WHResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetSAPAllocaDNSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSAPAllocaDN" />
+  </wsdl:message>
+  <wsdl:message name="GetSAPAllocaDNSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSAPAllocaDNResponse" />
+  </wsdl:message>
+  <wsdl:message name="Transfer_RDdataSoapIn">
+    <wsdl:part name="parameters" element="tns:Transfer_RDdata" />
+  </wsdl:message>
+  <wsdl:message name="Transfer_RDdataSoapOut">
+    <wsdl:part name="parameters" element="tns:Transfer_RDdataResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetMesdataSoapIn">
+    <wsdl:part name="parameters" element="tns:GetMesdata" />
+  </wsdl:message>
+  <wsdl:message name="GetMesdataSoapOut">
+    <wsdl:part name="parameters" element="tns:GetMesdataResponse" />
+  </wsdl:message>
+  <wsdl:message name="SapDataToFoxSoapIn">
+    <wsdl:part name="parameters" element="tns:SapDataToFox" />
+  </wsdl:message>
+  <wsdl:message name="SapDataToFoxSoapOut">
+    <wsdl:part name="parameters" element="tns:SapDataToFoxResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetMESStockInfoHttpPostIn">
+    <wsdl:part name="Box" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetMESStockInfoHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetMESPNInfoHttpPostIn">
+    <wsdl:part name="PN" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetMESPNInfoHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetMaterialTransferInfoHttpPostIn">
+    <wsdl:part name="BoxID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetMaterialTransferInfoHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="UpdateStockINStatusHttpPostIn">
+    <wsdl:part name="Box" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UpdateStockINStatusHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="UpdateReturnLineStatusHttpPostIn">
+    <wsdl:part name="Box" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UpdateReturnLineStatusHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="CheckPackOutLogicHttpPostIn">
+    <wsdl:part name="json" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CheckPackOutLogicHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetWOHttpPostIn">
+    <wsdl:part name="json" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetWOHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetSAPMIX_COLLECTIONHttpPostIn">
+    <wsdl:part name="json" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetSAPMIX_COLLECTIONHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetSAPTransfer_WHHttpPostIn">
+    <wsdl:part name="json" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetSAPTransfer_WHHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetSAPAllocaDNHttpPostIn">
+    <wsdl:part name="json" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetSAPAllocaDNHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="Transfer_RDdataHttpPostIn">
+    <wsdl:part name="Sn" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="Transfer_RDdataHttpPostOut" />
+  <wsdl:message name="GetMesdataHttpPostIn">
+    <wsdl:part name="Json" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetMesdataHttpPostOut" />
+  <wsdl:message name="SapDataToFoxHttpPostIn">
+    <wsdl:part name="Json" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SapDataToFoxHttpPostOut" />
+  <wsdl:portType name="MesApiSoap">
+    <wsdl:operation name="GetMESStockInfo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">名称：入库接口&lt;br&gt;功能：检查Routing，检查PackOutLogic，返回机器信息&lt;br&gt;参数：栈板号/箱号/金刚车车号&lt;br&gt;返回：Json</wsdl:documentation>
+      <wsdl:input message="tns:GetMESStockInfoSoapIn" />
+      <wsdl:output message="tns:GetMESStockInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMESPNInfo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">名称：获取料号信息接口&lt;br&gt;功能：返回料号相关信息&lt;br&gt;参数：料号&lt;br&gt;返回：Json</wsdl:documentation>
+      <wsdl:input message="tns:GetMESPNInfoSoapIn" />
+      <wsdl:output message="tns:GetMESPNInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMaterialTransferInfo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">名称：获取材料转仓数量接口&lt;br&gt;功能：返回料号和数量&lt;br&gt;参数：BoxID&lt;br&gt;返回：Json</wsdl:documentation>
+      <wsdl:input message="tns:GetMaterialTransferInfoSoapIn" />
+      <wsdl:output message="tns:GetMaterialTransferInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateStockINStatus">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">名称：回传入库状态接口&lt;br&gt;功能：更新MES状态为入库完成状态&lt;br&gt;参数：栈板号/箱号/金刚车车号&lt;br&gt;返回：Json(例：[{"Result":"PASS"}])</wsdl:documentation>
+      <wsdl:input message="tns:UpdateStockINStatusSoapIn" />
+      <wsdl:output message="tns:UpdateStockINStatusSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateReturnLineStatus">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">名称：退回产线接口&lt;br&gt;功能：更新MES状态为仓库Out状态&lt;br&gt;参数：箱号&lt;br&gt;返回：Json(例：[{"Result":"PASS"}])</wsdl:documentation>
+      <wsdl:input message="tns:UpdateReturnLineStatusSoapIn" />
+      <wsdl:output message="tns:UpdateReturnLineStatusSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckPackOutLogic">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">名称：PackOutLogic接口&lt;br&gt;功能：检查关键测试站的结果和顺序是否正确&lt;br&gt;参数：Json(例：{ "SN":[{"key":"value"},{"key":"value"}]})&lt;br&gt;返回：Json(例：[{"SN":"0080002035","RESULT":"OK""}])</wsdl:documentation>
+      <wsdl:input message="tns:CheckPackOutLogicSoapIn" />
+      <wsdl:output message="tns:CheckPackOutLogicSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetWO">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">名称：工单接口&lt;br&gt;功能：SAP传送工单和Bom信息给Mes&lt;br&gt;参数：Json(例：{"Head":[{"key":"value","key":"value"}],"items":[{"key":"value","key":"value"},{"key":"value","key":"value"}]})&lt;br&gt;返回：Json(例：[{"AUFNR":"0080002035","ZZMSGTYPE":"S","ZZMSG":" "}])</wsdl:documentation>
+      <wsdl:input message="tns:GetWOSoapIn" />
+      <wsdl:output message="tns:GetWOSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSAPMIX_COLLECTION">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">名称：杂收发预留下发接口&lt;br&gt;功能：SAP传送杂收发预留信息给Mes&lt;br&gt;参数：Json(例：{"Head":[{"key":"value","key":"value"}],"items":[{"key":"value","key":"value"},{"key":"value","key":"value"}]})&lt;br&gt;返回：Json(例：[{"LDDNUM":"0080002035","ZZMSGTYPE":"S","ZZMSG":" "}])</wsdl:documentation>
+      <wsdl:input message="tns:GetSAPMIX_COLLECTIONSoapIn" />
+      <wsdl:output message="tns:GetSAPMIX_COLLECTIONSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSAPTransfer_WH">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">名称：转仓预留下发接口&lt;br&gt;功能：SAP传送转仓预留信息给Mes&lt;br&gt;参数：Json(例：{"Head":[{"key":"value","key":"value"}],"items":[{"key":"value","key":"value"},{"key":"value","key":"value"}]})&lt;br&gt;返回：Json(例：[{"ZDBNUM":"0080002035","ZZMSGTYPE":"S","ZZMSG":" "}])</wsdl:documentation>
+      <wsdl:input message="tns:GetSAPTransfer_WHSoapIn" />
+      <wsdl:output message="tns:GetSAPTransfer_WHSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSAPAllocaDN">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">名称：SAPAllocaDN接口&lt;br&gt;功能：Sap传送交货单给Mes&lt;br&gt;参数：Json(例：{"Head":[{"key":"value","key":"value"}],"items":[{"key":"value","key":"value"},{"key":"value","key":"value"}]})&lt;br&gt;返回：Json(例：{"VBELN":"0080002035","ZZMSGTYPE":"S","ZZMSG":" "})</wsdl:documentation>
+      <wsdl:input message="tns:GetSAPAllocaDNSoapIn" />
+      <wsdl:output message="tns:GetSAPAllocaDNSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Transfer_RDdata">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">名称：Transfer_RDdata&lt;br&gt;功能：用于RD向Mes取数据&lt;br&gt;参数：SN&lt;br&gt;返回：Json</wsdl:documentation>
+      <wsdl:input message="tns:Transfer_RDdataSoapIn" />
+      <wsdl:output message="tns:Transfer_RDdataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMesdata">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">名称：GetMesdata&lt;br&gt;功能：用于向Mes获取数据&lt;br&gt;参数：Json 格式：[{"key":"value","key":"value"}]&lt;br&gt;返回：Json</wsdl:documentation>
+      <wsdl:input message="tns:GetMesdataSoapIn" />
+      <wsdl:output message="tns:GetMesdataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SapDataToFox">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">名称：SapDataToFox&lt;br&gt;功能：用于Sap发料数据传送Apple Fox&lt;br&gt;参数：Json 格式：[{"key":"value","key":"value"}]&lt;br&gt;返回：Json</wsdl:documentation>
+      <wsdl:input message="tns:SapDataToFoxSoapIn" />
+      <wsdl:output message="tns:SapDataToFoxSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="MesApiHttpPost">
+    <wsdl:operation name="GetMESStockInfo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">名称：入库接口&lt;br&gt;功能：检查Routing，检查PackOutLogic，返回机器信息&lt;br&gt;参数：栈板号/箱号/金刚车车号&lt;br&gt;返回：Json</wsdl:documentation>
+      <wsdl:input message="tns:GetMESStockInfoHttpPostIn" />
+      <wsdl:output message="tns:GetMESStockInfoHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMESPNInfo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">名称：获取料号信息接口&lt;br&gt;功能：返回料号相关信息&lt;br&gt;参数：料号&lt;br&gt;返回：Json</wsdl:documentation>
+      <wsdl:input message="tns:GetMESPNInfoHttpPostIn" />
+      <wsdl:output message="tns:GetMESPNInfoHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMaterialTransferInfo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">名称：获取材料转仓数量接口&lt;br&gt;功能：返回料号和数量&lt;br&gt;参数：BoxID&lt;br&gt;返回：Json</wsdl:documentation>
+      <wsdl:input message="tns:GetMaterialTransferInfoHttpPostIn" />
+      <wsdl:output message="tns:GetMaterialTransferInfoHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateStockINStatus">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">名称：回传入库状态接口&lt;br&gt;功能：更新MES状态为入库完成状态&lt;br&gt;参数：栈板号/箱号/金刚车车号&lt;br&gt;返回：Json(例：[{"Result":"PASS"}])</wsdl:documentation>
+      <wsdl:input message="tns:UpdateStockINStatusHttpPostIn" />
+      <wsdl:output message="tns:UpdateStockINStatusHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateReturnLineStatus">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">名称：退回产线接口&lt;br&gt;功能：更新MES状态为仓库Out状态&lt;br&gt;参数：箱号&lt;br&gt;返回：Json(例：[{"Result":"PASS"}])</wsdl:documentation>
+      <wsdl:input message="tns:UpdateReturnLineStatusHttpPostIn" />
+      <wsdl:output message="tns:UpdateReturnLineStatusHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckPackOutLogic">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">名称：PackOutLogic接口&lt;br&gt;功能：检查关键测试站的结果和顺序是否正确&lt;br&gt;参数：Json(例：{ "SN":[{"key":"value"},{"key":"value"}]})&lt;br&gt;返回：Json(例：[{"SN":"0080002035","RESULT":"OK""}])</wsdl:documentation>
+      <wsdl:input message="tns:CheckPackOutLogicHttpPostIn" />
+      <wsdl:output message="tns:CheckPackOutLogicHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetWO">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">名称：工单接口&lt;br&gt;功能：SAP传送工单和Bom信息给Mes&lt;br&gt;参数：Json(例：{"Head":[{"key":"value","key":"value"}],"items":[{"key":"value","key":"value"},{"key":"value","key":"value"}]})&lt;br&gt;返回：Json(例：[{"AUFNR":"0080002035","ZZMSGTYPE":"S","ZZMSG":" "}])</wsdl:documentation>
+      <wsdl:input message="tns:GetWOHttpPostIn" />
+      <wsdl:output message="tns:GetWOHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSAPMIX_COLLECTION">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">名称：杂收发预留下发接口&lt;br&gt;功能：SAP传送杂收发预留信息给Mes&lt;br&gt;参数：Json(例：{"Head":[{"key":"value","key":"value"}],"items":[{"key":"value","key":"value"},{"key":"value","key":"value"}]})&lt;br&gt;返回：Json(例：[{"LDDNUM":"0080002035","ZZMSGTYPE":"S","ZZMSG":" "}])</wsdl:documentation>
+      <wsdl:input message="tns:GetSAPMIX_COLLECTIONHttpPostIn" />
+      <wsdl:output message="tns:GetSAPMIX_COLLECTIONHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSAPTransfer_WH">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">名称：转仓预留下发接口&lt;br&gt;功能：SAP传送转仓预留信息给Mes&lt;br&gt;参数：Json(例：{"Head":[{"key":"value","key":"value"}],"items":[{"key":"value","key":"value"},{"key":"value","key":"value"}]})&lt;br&gt;返回：Json(例：[{"ZDBNUM":"0080002035","ZZMSGTYPE":"S","ZZMSG":" "}])</wsdl:documentation>
+      <wsdl:input message="tns:GetSAPTransfer_WHHttpPostIn" />
+      <wsdl:output message="tns:GetSAPTransfer_WHHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSAPAllocaDN">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">名称：SAPAllocaDN接口&lt;br&gt;功能：Sap传送交货单给Mes&lt;br&gt;参数：Json(例：{"Head":[{"key":"value","key":"value"}],"items":[{"key":"value","key":"value"},{"key":"value","key":"value"}]})&lt;br&gt;返回：Json(例：{"VBELN":"0080002035","ZZMSGTYPE":"S","ZZMSG":" "})</wsdl:documentation>
+      <wsdl:input message="tns:GetSAPAllocaDNHttpPostIn" />
+      <wsdl:output message="tns:GetSAPAllocaDNHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Transfer_RDdata">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">名称：Transfer_RDdata&lt;br&gt;功能：用于RD向Mes取数据&lt;br&gt;参数：SN&lt;br&gt;返回：Json</wsdl:documentation>
+      <wsdl:input message="tns:Transfer_RDdataHttpPostIn" />
+      <wsdl:output message="tns:Transfer_RDdataHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMesdata">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">名称：GetMesdata&lt;br&gt;功能：用于向Mes获取数据&lt;br&gt;参数：Json 格式：[{"key":"value","key":"value"}]&lt;br&gt;返回：Json</wsdl:documentation>
+      <wsdl:input message="tns:GetMesdataHttpPostIn" />
+      <wsdl:output message="tns:GetMesdataHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SapDataToFox">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">名称：SapDataToFox&lt;br&gt;功能：用于Sap发料数据传送Apple Fox&lt;br&gt;参数：Json 格式：[{"key":"value","key":"value"}]&lt;br&gt;返回：Json</wsdl:documentation>
+      <wsdl:input message="tns:SapDataToFoxHttpPostIn" />
+      <wsdl:output message="tns:SapDataToFoxHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="MesApiSoap" type="tns:MesApiSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetMESStockInfo">
+      <soap:operation soapAction="http://tempuri.org.bill/GetMESStockInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMESPNInfo">
+      <soap:operation soapAction="http://tempuri.org.bill/GetMESPNInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMaterialTransferInfo">
+      <soap:operation soapAction="http://tempuri.org.bill/GetMaterialTransferInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateStockINStatus">
+      <soap:operation soapAction="http://tempuri.org.bill/UpdateStockINStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateReturnLineStatus">
+      <soap:operation soapAction="http://tempuri.org.bill/UpdateReturnLineStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckPackOutLogic">
+      <soap:operation soapAction="http://tempuri.org.bill/CheckPackOutLogic" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWO">
+      <soap:operation soapAction="http://tempuri.org.bill/GetWO" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSAPMIX_COLLECTION">
+      <soap:operation soapAction="http://tempuri.org.bill/GetSAPMIX_COLLECTION" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSAPTransfer_WH">
+      <soap:operation soapAction="http://tempuri.org.bill/GetSAPTransfer_WH" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSAPAllocaDN">
+      <soap:operation soapAction="http://tempuri.org.bill/GetSAPAllocaDN" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Transfer_RDdata">
+      <soap:operation soapAction="http://tempuri.org.bill/Transfer_RDdata" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMesdata">
+      <soap:operation soapAction="http://tempuri.org.bill/GetMesdata" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SapDataToFox">
+      <soap:operation soapAction="http://tempuri.org.bill/SapDataToFox" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="MesApiSoap12" type="tns:MesApiSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetMESStockInfo">
+      <soap12:operation soapAction="http://tempuri.org.bill/GetMESStockInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMESPNInfo">
+      <soap12:operation soapAction="http://tempuri.org.bill/GetMESPNInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMaterialTransferInfo">
+      <soap12:operation soapAction="http://tempuri.org.bill/GetMaterialTransferInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateStockINStatus">
+      <soap12:operation soapAction="http://tempuri.org.bill/UpdateStockINStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateReturnLineStatus">
+      <soap12:operation soapAction="http://tempuri.org.bill/UpdateReturnLineStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckPackOutLogic">
+      <soap12:operation soapAction="http://tempuri.org.bill/CheckPackOutLogic" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWO">
+      <soap12:operation soapAction="http://tempuri.org.bill/GetWO" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSAPMIX_COLLECTION">
+      <soap12:operation soapAction="http://tempuri.org.bill/GetSAPMIX_COLLECTION" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSAPTransfer_WH">
+      <soap12:operation soapAction="http://tempuri.org.bill/GetSAPTransfer_WH" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSAPAllocaDN">
+      <soap12:operation soapAction="http://tempuri.org.bill/GetSAPAllocaDN" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Transfer_RDdata">
+      <soap12:operation soapAction="http://tempuri.org.bill/Transfer_RDdata" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMesdata">
+      <soap12:operation soapAction="http://tempuri.org.bill/GetMesdata" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SapDataToFox">
+      <soap12:operation soapAction="http://tempuri.org.bill/SapDataToFox" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="MesApiHttpPost" type="tns:MesApiHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="GetMESStockInfo">
+      <http:operation location="/GetMESStockInfo" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMESPNInfo">
+      <http:operation location="/GetMESPNInfo" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMaterialTransferInfo">
+      <http:operation location="/GetMaterialTransferInfo" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateStockINStatus">
+      <http:operation location="/UpdateStockINStatus" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateReturnLineStatus">
+      <http:operation location="/UpdateReturnLineStatus" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckPackOutLogic">
+      <http:operation location="/CheckPackOutLogic" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWO">
+      <http:operation location="/GetWO" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSAPMIX_COLLECTION">
+      <http:operation location="/GetSAPMIX_COLLECTION" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSAPTransfer_WH">
+      <http:operation location="/GetSAPTransfer_WH" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSAPAllocaDN">
+      <http:operation location="/GetSAPAllocaDN" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Transfer_RDdata">
+      <http:operation location="/Transfer_RDdata" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="GetMesdata">
+      <http:operation location="/GetMesdata" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="SapDataToFox">
+      <http:operation location="/SapDataToFox" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MesApi">
+    <wsdl:port name="MesApiSoap" binding="tns:MesApiSoap">
+      <soap:address location="http://10.55.4.100/mesapi_test/mesapi.asmx" />
+    </wsdl:port>
+    <wsdl:port name="MesApiSoap12" binding="tns:MesApiSoap12">
+      <soap12:address location="http://10.55.4.100/mesapi_test/mesapi.asmx" />
+    </wsdl:port>
+    <wsdl:port name="MesApiHttpPost" binding="tns:MesApiHttpPost">
+      <http:address location="http://10.55.4.100/mesapi_test/mesapi.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

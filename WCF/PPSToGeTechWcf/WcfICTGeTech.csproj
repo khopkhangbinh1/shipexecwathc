@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{200E045E-2018-4073-8316-E635F134BC2E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WcfICTGeTech</RootNamespace>
+    <AssemblyName>WcfICTGeTech</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\MES_NET45_JS\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="OperationWCF">
+      <HintPath>..\dll\OperationWCF.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interface\IGeTechToICT.cs" />
+    <Compile Include="Interface\IICTToGeTech.cs" />
+    <Compile Include="Interface\IMESGateway.cs" />
+    <Compile Include="Interface\IMessageAction.cs" />
+    <Compile Include="Model\ATSPickCompleteModel.cs" />
+    <Compile Include="Model\ATSStockInCheckModel.cs" />
+    <Compile Include="Model\ATSStockInModel.cs" />
+    <Compile Include="Model\CleanStockModel.cs" />
+    <Compile Include="Model\DbModel.cs" />
+    <Compile Include="Model\MESModel.cs" />
+    <Compile Include="Model\MultiPalletCombineModel.cs" />
+    <Compile Include="Model\PackoutNotifyModel.cs" />
+    <Compile Include="Model\PPSBOMReleaseModel.cs" />
+    <Compile Include="Model\PPSBOMReleaseResponseModel.cs" />
+    <Compile Include="Model\PPSPickCompleteModel.cs" />
+    <Compile Include="Model\PPSQHoldUndoModel.cs" />
+    <Compile Include="Model\PPSShippingNoticeModel.cs" />
+    <Compile Include="Model\PPSStockTakeByICTPNModel.cs" />
+    <Compile Include="Model\PPSStockTakeByLogModel.cs" />
+    <Compile Include="Model\SendMailNotifyModel.cs" />
+    <Compile Include="Model\StockInConfirmModel.cs" />
+    <Compile Include="Model\StockInNotifyModel.cs" />
+    <Compile Include="Model\Sync_ICT_PartModel.cs" />
+    <Compile Include="Model\Sync_LocationModel.cs" />
+    <Compile Include="Model\Sync_TrolleyModel.cs" />
+    <Compile Include="Model\TransactionTaskLog.cs" />
+    <Compile Include="Model\TrolleyBackToStockModel.cs" />
+    <Compile Include="Model\TrolleyMoveNoticeModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\AbstractDataAdapter.cs" />
+    <Compile Include="Service\OperationAdapter\OUT\CleanStockAdapter.cs" />
+    <Compile Include="Service\CommonHelper.cs" />
+    <Compile Include="Service\OperationAdapter\IN\ATSPickCompleteAdapter.cs" />
+    <Compile Include="Service\OperationAdapter\IN\ATSStockInAdapter.cs" />
+    <Compile Include="Service\OperationAdapter\IN\ATSStockInCheckAdapter.cs" />
+    <Compile Include="Service\OperationAdapter\IN\PPSBOMReleaseResponseAdapter.cs" />
+    <Compile Include="Service\OperationAdapter\IN\SendMailNotifyAdapter.cs" />
+    <Compile Include="Service\OperationAdapter\IN\StockInConfirmAdapter.cs" />
+    <Compile Include="Service\OperationAdapter\IN\Sync_LocationAdapter.cs" />
+    <Compile Include="Service\OperationAdapter\IN\Sync_TrolleyAdapter.cs" />
+    <Compile Include="Service\OperationAdapter\IN\TrolleyMoveNoticeAdapter.cs" />
+    <Compile Include="Service\OperationAdapter\OUT\MultiPalletCombineAdapter.cs" />
+    <Compile Include="Service\OperationAdapter\OUT\PackoutNotifyAdapter.cs" />
+    <Compile Include="Service\OperationAdapter\OUT\PPSBOMReleaseAdapter.cs" />
+    <Compile Include="Service\OperationAdapter\OUT\PPSPickCompleteAdapter.cs" />
+    <Compile Include="Service\OperationAdapter\OUT\PPSQHoldUndoAdapter.cs" />
+    <Compile Include="Service\OperationAdapter\OUT\PPSShippingNoticeAdapter.cs" />
+    <Compile Include="Service\OperationAdapter\OUT\PPSStockTakeByICTPNAdapter.cs" />
+    <Compile Include="Service\OperationAdapter\OUT\PPSStockTakeByLogAdapter.cs" />
+    <Compile Include="Service\OperationAdapter\OUT\StockInNotifyAdapter.cs" />
+    <Compile Include="Service\OperationAdapter\OUT\Sync_ICT_PartAdapter.cs" />
+    <Compile Include="Service\OperationAdapter\OUT\TrolleyBackToStockAdapter.cs" />
+    <Compile Include="Wcf\ICTGetechWCF.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\ClientUtils\ClientUtils.csproj">
+      <Project>{19ba5aaa-2373-4807-b207-c88c48517264}</Project>
+      <Name>ClientUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\PPS_NET45\Common\MESModel\MESModel.csproj">
+      <Project>{a88beebe-5d77-4321-8186-658a208e2faa}</Project>
+      <Name>MESModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\PPS_NET45\WMS\EDIWarehouseIN\EDIWarehouseIN.csproj">
+      <Project>{3c5b9c08-9852-432a-87bb-ccab63ac03d6}</Project>
+      <Name>EDIWarehouseIN</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -1,0 +1,9 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="iMWS.Api.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="iMWS_Api_JSMESReference_MesApi" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://10.178.4.102/mesapi_test/mesapi.asmx</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

@@ -1,0 +1,533 @@
+create or replace procedure sp_vt_autotest2(insid   in varchar2,
+                                                    endwc   in varchar2,
+                                                    endcode in varchar2,
+                                                    errmsg  out varchar2) as
+
+  --游标1
+  cursor c_sidpallet(cin_sid1 varchar2) is
+    select a.shipment_id,
+           a.pallet_no,
+           a.carton_qty,
+           a.pick_carton,
+           a.pack_carton,
+           a.check_result,
+           a.weight,
+           a.truck_no,
+           a.shipment_flag
+      from ppsuser.t_shipment_pallet a
+     where a.shipment_id = cin_sid1
+     order by a.pallet_no asc;
+
+  --游标2
+  cursor c_sidpalletpart(cin_sid2 varchar2, cin_sidpallet2 varchar2) is
+    select a.shipment_id,
+           b.pallet_no,
+           b.ictpn,
+           b.qty,
+           b.carton_qty,
+           b.pick_qty,
+           b.pick_carton,
+           b.computer_name,
+           b.pack_qty,
+           b.pack_carton
+      from ppsuser.t_shipment_pallet a
+      join ppsuser.t_shipment_pallet_part b
+        on a.pallet_no = b.pallet_no
+     where a.shipment_id = cin_sid2
+       and a.pallet_no = cin_sidpallet2
+     order by b.pallet_no asc, b.ictpn asc;
+
+  --游标3
+  cursor c_palletcarton(cin_pallet varchar2, cin_part varchar2) is
+    select distinct a.carton_no
+      from ppsuser.t_sn_status a
+     where a.pick_pallet_no = 'P1' || cin_pallet
+       and a.part_no = cin_part
+       and wc = 'W1';
+
+  --定义一个游标变量
+  c_row1 c_sidpallet%rowtype;
+  c_row2 c_sidpalletpart%rowtype;
+  c_row3 c_palletcarton%rowtype;
+
+  --集货单号的状态
+  --sidstatus  varchar2(10);
+  sidstatus2 varchar2(10);
+
+  --完美匹配栈板记录
+  --recordnum number := 0;
+
+  --完美匹配栈板
+  --okpalletno varchar2(30);
+
+  --匹配箱号记录
+  recordnum2 number := 0;
+  i          number := 0;
+  --匹配箱号
+  okcartonno varchar2(30);
+
+  checknum number := 0;
+  tspnum   number := 0;
+
+  --check sp 的返回值
+  outretmsg varchar2(100);
+
+  standardwight varchar2(20);
+
+  snerrorwcnum number := 0;
+
+  --oms loadcar log
+  recordnum3 number := 0;
+  --shipment_pallet  shipment_flag<>1 计数
+  recordnum4 number := 0;
+
+  sidtransport varchar2(10);
+  sidcontainer varchar2(100);
+
+  sidfdds varchar2(10);
+
+  --是否为sawb
+  recordnum5 number := 0;
+
+  --P Part 逻辑  deliveryno  lineitem shipmentid ictpn =>dlsi
+  dlsicount     number := 0;
+  sumpresonflag number := 0;
+
+  --exception：
+  errorexception exception; --申明异常
+  errorcode number; --异常代号
+
+begin
+  errmsg := 'OK';
+
+  outretmsg := '';
+
+  ---------
+  open c_sidpallet(insid);
+  loop
+    --提取一行数据到c_row
+    fetch c_sidpallet
+      into c_row1;
+    --判读是否提取到值，没取到值就退出
+    --取到值c_job%notfound 是false
+    --取不到值c_job%notfound 是true
+    exit when c_sidpallet%notfound;
+
+    --dbms_output.put_line('1palletno:' || c_row1.pallet_no);
+    --如果是未完成的状态 就要作业
+    if (c_row1.carton_qty > c_row1.pick_carton) or
+       (c_row1.carton_qty > c_row1.pack_carton) then
+      open c_sidpalletpart(insid, c_row1.pallet_no);
+      loop
+        --提取一行数据到c_row
+        fetch c_sidpalletpart
+          into c_row2;
+        exit when c_sidpalletpart%notfound;
+
+        --如果是pick未完成的状态 就要作业
+        if c_row2.carton_qty > c_row2.pick_carton then
+
+          --分MPart 和PPart 分别获取互不干涉  改为只是匹配箱号不检查栈板了
+          --c_row2.pallet_no ,c_row2.ictpn
+
+          --2019/7/1 GWF 压测没有 P part 订单
+          select count(aa.dlsi) dlsicount1,
+                 sum(presonflagcount) sumpresonflag1
+            into dlsicount, sumpresonflag
+            from (select a.delivery_no || a.line_item || a.shipment_id ||
+                         a.ictpn as dlsi,
+                         decode(a.person_flag, 'Y', 1, 0) as presonflagcount
+                    from ppsuser.t_order_info a
+                   where (a.delivery_no, a.line_item, a.shipment_id, a.ictpn) in
+                         (select b.delivery_no,
+                                 b.line_item,
+                                 b.shipment_id,
+                                 b.ictpn
+                            from ppsuser.t_pallet_order b
+                          --var is there
+                           where b.pallet_no = c_row2.pallet_no
+                             and b.ictpn = c_row2.ictpn)) aa;
+
+          if sumpresonflag = 0 then
+            --获取箱号
+            select count(distinct carton_no)
+              into recordnum2
+              from ppsuser.t_sn_status
+             where wc = 'W0'
+               and part_no = c_row2.ictpn
+               and customer_sn not in
+                   (select custom_sn from ppsuser.t_trolley_sn_status)
+               and customer_sn like 'JSS%'
+                  --and carton_no like '00%'
+               and cdt > to_date('2020-07-09', 'yyyy-mm-dd')
+               and substr(carton_no, -1, 1) = endcode;
+          else
+
+            select count(distinct carton_no)
+              into recordnum2
+              from ppsuser.t_trolley_sn_status a
+             where a.trolley_no <> 'ICT-00-00-000'
+               and (a.delivery_no, a.line_item, a.ictpartno) in
+                   (select b.delivery_no, b.line_item, b.ictpn
+                      from ppsuser.t_pallet_order b
+                     where b.pallet_no = c_row2.pallet_no
+                       and b.ictpn = c_row2.ictpn)
+               and a.custom_sn not in
+                   (select customer_sn
+                      from ppsuser.t_sn_status
+                     where substr(pick_pallet_no, 3) = c_row2.pallet_no);
+
+          end if;
+          if (recordnum2 >= c_row2.carton_qty - c_row2.pick_carton) then
+
+            loop
+              i := i + 1;
+              if sumpresonflag = 0 then
+
+                select aaa.carton_no
+                  into okcartonno
+                  from (select carton_no
+                          from ppsuser.t_sn_status
+                         where wc = 'W0'
+                           and part_no = c_row2.ictpn
+                           and CDT > TO_DATE('2020-07-09', 'yyyy-mm-dd')
+                           and customer_sn not in
+                               (select custom_sn
+                                  from ppsuser.t_trolley_sn_status)
+                           and customer_sn like 'JSS%'
+                              --and carton_no like 'VVT%'
+                           and substr(carton_no, -1, 1) = endcode) aaa
+                 where (rownum <= 1)
+                   for update;
+                /* select aaa.carton_no
+                into okcartonno
+                from (select distinct carton_no
+                                from ppsuser.t_sn_status
+                               where wc = 'W0'
+                                 and part_no = c_row2.ictpn
+                                 and customer_sn not in
+                                     (select custom_sn
+                                        from ppsuser.t_trolley_sn_status)
+                                         and customer_sn not like 'VVT%'
+                                 and cdt <
+                                     to_date('2019-06-29', 'yyyy-mm-dd')
+
+                       ) aaa      where (rownum <= 1) for update;*/
+              else
+                select aaa.carton_no
+                  into okcartonno
+                  from (select distinct carton_no
+                          from ppsuser.t_trolley_sn_status a
+                         where a.trolley_no <> 'ICT-00-00-000'
+                           and (a.delivery_no, a.line_item, a.ictpartno) in
+                               (select b.delivery_no, b.line_item, b.ictpn
+                                  from ppsuser.t_pallet_order b
+                                 where b.pallet_no = c_row2.pallet_no
+                                   and b.ictpn = c_row2.ictpn)
+                           and a.custom_sn not in
+                               (select customer_sn
+                                  from ppsuser.t_sn_status
+                                 where substr(pick_pallet_no, 3) =
+                                       c_row2.pallet_no)) aaa
+                 where (rownum <= 1);
+              end if;
+              --vtjob2
+              ppsuser.sp_vt_autopick(c_row1.pallet_no,
+                                     okcartonno,
+                                     outretmsg);
+              if substr(outretmsg, 1, 2) <> 'OK' then
+                errmsg := outretmsg;
+                return;
+              end if;
+              exit when i = c_row2.carton_qty - c_row2.pick_carton;
+            end loop;
+            i := 0;
+            --产生完全匹配的栈板
+          else
+
+            errmsg := 'NG-VT' || '2partno:' || c_row2.ictpn ||
+                      '箱号不够，请先产生序号';
+            return;
+          end if;
+
+        end if;
+
+        if upper(endwc) = 'PICK' then
+
+          return;
+        else
+          --如果是pack未完成就要作业  --这里如果是做了一半的， 很麻烦 无法使用p1的pickpallet作业
+          if c_row2.carton_qty > c_row2.pack_carton then
+
+            open c_palletcarton(c_row1.pallet_no, c_row2.ictpn);
+            loop
+              --提取一行数据到c_row
+              fetch c_palletcarton
+                into c_row3;
+              exit when c_palletcarton%notfound;
+              --vtjob3
+              ppsuser.sp_vt_autopack(c_row3.carton_no,
+                                     'P1' || c_row1.pallet_no,
+                                     outretmsg);
+              if substr(outretmsg, 1, 2) <> 'OK' then
+                errmsg := outretmsg;
+                return;
+              end if;
+
+            end loop;
+            close c_palletcarton;
+          end if;
+
+        end if;
+      end loop;
+      close c_sidpalletpart;
+    end if;
+
+    --如果check未完成就要作业
+    if upper(endwc) = 'PACK' or upper(endwc) = 'PICK' then
+      return;
+
+    else
+      if c_row1.check_result <> 'PASS' or c_row1.check_result is null then
+
+        update ppsuser.t_sn_status tss
+           set tss.wc = 'W3', tss.check_time = sysdate
+         where tss.wc = 'W2'
+           and tss.pack_pallet_no = c_row1.pallet_no;
+        commit;
+        select count(*)
+          into checknum
+          from ppsuser.t_sn_status tss
+         where tss.pack_pallet_no = c_row1.pallet_no
+           and tss.check_time is not null;
+
+        select tsp.qty
+          into tspnum
+          from ppsuser.t_shipment_pallet tsp
+         where tsp.pallet_no = c_row1.pallet_no;
+
+        if (checknum = tspnum) and checknum > 0 then
+          update ppsuser.t_shipment_pallet tsp
+             set tsp.check_result = 'PASS'
+           where tsp.pallet_no = c_row1.pallet_no;
+        end if;
+
+      end if;
+      --如果weight未完成就要作业
+    end if;
+
+    if upper(endwc) = 'CHECK' or upper(endwc) = 'PACK' or
+       upper(endwc) = 'PICK' then
+      return;
+
+    else
+      if (c_row1.weight is null) or (c_row1.weight = 0) then
+
+        --vtjob4
+        ppsuser.sp_vt_checkweightpallet(c_row1.pallet_no,
+                                        standardwight,
+                                        outretmsg);
+        if substr(outretmsg, 1, 2) <> 'OK' then
+          errmsg := outretmsg;
+          return;
+        end if;
+
+        select count(customer_sn)
+          into snerrorwcnum
+          from ppsuser.t_sn_status
+         where pack_pallet_no = c_row1.pallet_no
+           and wc <> 'W3';
+        if snerrorwcnum > 0 then
+          errmsg := 'NG-VT_PACKPALLETNO 对应CSN序号站别异常';
+          return;
+        end if;
+
+        update ppsuser.t_sn_status a
+           set a.wc = 'W4', a.udt = sysdate
+         where pack_pallet_no = c_row1.pallet_no;
+
+        update ppsuser.t_shipment_pallet a
+           set a.weight          = standardwight,
+               a.standard_weight = standardwight,
+               a.real_pallet_no  = 'H06' || substr(sscc, 9, 9) ||
+                                   to_char(sysdate, 'yyyymmdd')
+         where a.pallet_no = c_row1.pallet_no;
+
+        insert into t_pallet_weight_log
+          (shipment_id,
+           pallet_no,
+           weight,
+           standard_weight,
+           dvalue_weight,
+           upper_weight,
+           lower_weight,
+           per_devweight,
+           pass)
+        values
+          (c_row1.shipment_id,
+           c_row1.pallet_no,
+           standardwight,
+           standardwight,
+           standardwight,
+           standardwight,
+           standardwight,
+           0,
+           1);
+
+      end if;
+
+    end if;
+
+    --如果shipment未完成就要作业
+    if upper(endwc) = 'WEIGHT' or upper(endwc) = 'CHECK' or
+       upper(endwc) = 'PACK' or upper(endwc) = 'PICK' then
+      return;
+    else
+      if c_row1.shipment_flag <> '1' or c_row1.shipment_flag is null then
+        --如果卡车没有维护需要预设（维护）一个卡车，再装车
+
+        select count(a.pallet_no)
+          into recordnum3
+          from pptest.oms_load_car a
+         where a.pallet_no = c_row1.pallet_no;
+        if (recordnum3 = 0) then
+          insert into pptest.oms_load_car
+            (shipment_id, pallet_no, car_no, isload, active, expectedtime)
+          values
+            (c_row1.shipment_id,
+             c_row1.pallet_no,
+             '苏SYSSYS',
+             0,
+             0,
+             trunc(sysdate) + numtodsinterval(0.5, 'day'));
+
+        end if;
+
+        select count(customer_sn)
+          into snerrorwcnum
+          from ppsuser.t_sn_status
+         where pack_pallet_no = c_row1.pallet_no
+           and wc <> 'W4';
+        if snerrorwcnum > 0 then
+          errmsg := 'NG-VT_PACKPALLETNO 对应CSN序号站别异常';
+          return;
+        end if;
+
+        update ppsuser.t_shipment_pallet a
+           set a.truck_no     =
+               (select b.car_no
+                  from pptest.oms_load_car b
+                 where a.shipment_id = b.shipment_id
+                   and a.pallet_no = b.pallet_no),
+               a.shipment_flag = '1'
+         where a.pallet_no = c_row1.pallet_no;
+        update ppsuser.t_sn_status
+           set wc = 'W5'
+         where pack_pallet_no = c_row1.pallet_no;
+
+        update pptest.oms_load_car
+           set isload = 1, loadtime = sysdate
+         where pallet_no = c_row1.pallet_no;
+
+      end if;
+
+    end if;
+  end loop;
+  close c_sidpallet;
+
+  ------
+  --如果upload未完成就要作业  只有shipment的状态是lf的才能做upload
+
+  if upper(endwc) = 'SHIPMENT' or upper(endwc) = 'WEIGHT' or
+     upper(endwc) = 'CHECK' or upper(endwc) = 'PACK' or
+     upper(endwc) = 'PICK' then
+    return;
+  end if;
+
+  select count(a.pallet_no)
+    into recordnum4
+    from ppsuser.t_shipment_pallet a
+   where a.shipment_id = insid
+     and (a.shipment_flag <> '1' or a.shipment_flag is null);
+  if recordnum4 = 0 then
+    update ppsuser.t_shipment_info
+       set status = 'LF'
+     where status = 'FP'
+       and shipment_id = insid;
+  end if;
+
+  select a.status, a.transport, a.container, a.shipment_type
+    into sidstatus2, sidtransport, sidcontainer, sidfdds
+    from ppsuser.t_shipment_info a
+   where a.shipment_id = insid;
+
+  if upper(endwc) = 'SHIPMENT' then
+
+    commit;
+    return;
+  end if;
+
+  if sidstatus2 = 'LF' then
+    --如果是海运的需要先设置海运货柜号
+
+    if sidtransport = 'SEA' and sidcontainer is null then
+      update ppsuser.t_shipment_info
+         set container = 'AUTOSYS001'
+       where shipment_id = insid;
+    end if;
+
+    if (sidfdds = 'FD') then
+      --vtjob5
+      ppsuser.sp_vt_autoinsert856asn(insid, outretmsg);
+      if substr(outretmsg, 1, 2) <> 'OK' then
+        errmsg := outretmsg;
+        return;
+      end if;
+    else
+      select count(a.sawb_shipment_id)
+        into recordnum5
+        from ppsuser.t_shipment_sawb a
+       where a.sawb_shipment_id = insid;
+
+      if recordnum5 = 0 then
+        --vtjob6
+        ppsuser.sp_vt_autoinsert856sc(insid, outretmsg);
+        if substr(outretmsg, 1, 2) <> 'OK' then
+          errmsg := outretmsg;
+          return;
+        end if;
+      else
+        --vtjob7
+        ppsuser.sp_vt_autoinsert856scsawb(insid, outretmsg);
+        if substr(outretmsg, 1, 2) <> 'OK' then
+          errmsg := outretmsg;
+          return;
+        end if;
+
+      end if;
+
+    end if;
+    --vtjob8
+    ppsuser.sp_vt_updateshipmentflag(insid, 'EDI', 'SYS', outretmsg);
+    if substr(outretmsg, 1, 2) <> 'OK' then
+      errmsg := outretmsg;
+      return;
+    end if;
+
+  else
+    errmsg := 'NG-VT_AUTOWORK-集货单号的状态有问题END';
+    return;
+  end if;
+  commit;
+
+exception
+  when errorexception then
+    errorcode := sqlcode;
+    errmsg    := 'NG-VT_AUTOWORK-' || errorcode || substr(sqlerrm, 1, 200);
+    rollback;
+  when others then
+    errmsg := 'NG-VT_AUTOWORK-发生了异常!' || errorcode ||
+              substr(sqlerrm, 1, 200);
+    rollback;
+
+end;
