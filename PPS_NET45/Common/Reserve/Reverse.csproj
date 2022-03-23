@@ -21,7 +21,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\..\..\MES_NET45_JS\</OutputPath>
+    <OutputPath>D:\WATCH_TEST\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -38,6 +38,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ClientUtils">
+      <HintPath>D:\WATCH_TEST\ClientUtils.dll</HintPath>
+    </Reference>
     <Reference Include="Oracle.ManagedDataAccess, Version=4.122.19.1, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Oracle.ManagedDataAccess.19.5.0\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
     </Reference>
@@ -80,10 +83,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\ClientUtils\ClientUtils.csproj">
-      <Project>{19ba5aaa-2373-4807-b207-c88c48517264}</Project>
-      <Name>ClientUtils</Name>
-    </ProjectReference>
     <ProjectReference Include="..\LibHelper\LibHelper.csproj">
       <Project>{504fc282-31b5-4a4f-b76f-8fbef4d9e656}</Project>
       <Name>LibHelper</Name>

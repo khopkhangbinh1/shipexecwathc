@@ -10,6 +10,7 @@ using System.Web;
 using PickList.Wcf;
 using PickList.Entitys;
 using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace PickList
 {
@@ -519,6 +520,13 @@ namespace PickList
             PickListBll pb1 = new PickListBll();
             if (pb1.IsFinishShipExec(pickPallet, out msg))
                 return;
+            ExecuteFinishShipExec(pickPallet, shipmentID, ShowResult);
+        }
+
+        public async Task ExecuteFinishShipExec(string pickPallet, string shipmentID, Action<string, string> ShowResult)
+        {
+            string msg = "";
+            PickListBll pb1 = new PickListBll();
 
             DataTable cartondt = pb1.GetCartonTableBLL(pickPallet);
             List<string> lstCartonNo = cartondt.AsEnumerable().Select(x => x["carton_no"].ToString()).ToList();
@@ -718,7 +726,7 @@ namespace PickList
             }
             return exeRes;
         }
-        public async void CallShipExec(string cartonNo, string shipmentID, Action<string, string> ShowResult)//, out string msg
+        public async Task CallShipExec(string cartonNo, string shipmentID, Action<string, string> ShowResult)//, out string msg
         {
             string ppsURL = "";
             string msg = "";
@@ -743,6 +751,13 @@ namespace PickList
             }
             else
                 ShowResult("配置有异常", "UPS ShipExec配置有异常，请再检查！");
+        }
+
+        public ExecuteResult GetWarningSNShipExec(string inputsn)
+        {
+            PickListDal PickDal = new PickListDal();
+            var res = PickDal.GetWarningSNShipExec(inputsn);
+            return res;
         }
     }
 }

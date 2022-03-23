@@ -2543,6 +2543,23 @@ namespace PickList
         {
 
         }
+
+        private void btnUPSResend_Click(object sender, EventArgs e)
+        {
+            TextMsg.Text = "";
+            TextMsg.BackColor = Color.Blue;
+            fCheck fcheck = new fCheck();
+            if (fcheck.ShowDialog() != DialogResult.OK)
+            {
+                ShowMsg("账号权限不正确", 0);
+                return;
+            }
+            else
+            {
+                var f = new fUPSShipExecCheck();
+                f.ShowDialog();
+            }
+        }
     }
 }
 

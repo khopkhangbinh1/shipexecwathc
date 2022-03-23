@@ -27,6 +27,7 @@ namespace CarrierWCF.Models
         //public string CompanyId { get => "0938d710-f64e-4753-85e1-42875acc2190"; }
         //public string Machine { get => "ICT_KS_MACHINE"; }
         public string CompanyId { get; set; }
+        public string SiteId { get; set; }
         public string Machine { get; set; }
     }
 }

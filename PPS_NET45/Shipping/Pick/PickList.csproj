@@ -23,7 +23,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\..\..\..\watch_test\Shipping\</OutputPath>
+    <OutputPath>D:\WATCH_TEST\Shipping\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -50,14 +50,18 @@
     </Reference>
     <Reference Include="ClientUtils, Version=1.0.0.29, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\watch_test\ClientUtils.dll</HintPath>
+      <HintPath>D:\WATCH_TEST\ClientUtils.dll</HintPath>
     </Reference>
     <Reference Include="CommonControl">
       <HintPath>..\..\..\Packages\CommonControl.dll</HintPath>
     </Reference>
+    <Reference Include="LibHelper, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\WATCH_TEST\LibHelper.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\watch_test\Newtonsoft.Json.dll</HintPath>
+      <HintPath>D:\WATCH_TEST\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NPOI, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -79,9 +83,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\watch_test\OperationWCF.dll</HintPath>
     </Reference>
-    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.19.1, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\watch_test\Oracle.ManagedDataAccess.dll</HintPath>
+      <HintPath>D:\WATCH_TEST\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="Reverse, Version=1.0.1.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\WATCH_TEST\Reverse.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -111,6 +119,24 @@
     </Compile>
     <Compile Include="fMain.Designer.cs">
       <DependentUpon>fMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fUPSResend.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fUPSResend.Designer.cs">
+      <DependentUpon>fUPSResend.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fUPSShipExecCheck.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fUPSShipExecCheck.Designer.cs">
+      <DependentUpon>fUPSShipExecCheck.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\MarinaModel.cs" />
     <Compile Include="Model\PackoutLogicModel.cs" />
@@ -154,6 +180,12 @@
     <EmbeddedResource Include="fMain.resx">
       <DependentUpon>fMain.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="fUPSResend.resx">
+      <DependentUpon>fUPSResend.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fUPSShipExecCheck.resx">
+      <DependentUpon>fUPSShipExecCheck.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PickListLabel.resx">
       <DependentUpon>PickListLabel.cs</DependentUpon>
     </EmbeddedResource>
@@ -194,16 +226,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Common\LibHelper\LibHelper.csproj">
-      <Project>{504fc282-31b5-4a4f-b76f-8fbef4d9e656}</Project>
-      <Name>LibHelper</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Common\Reserve\Reverse.csproj">
-      <Project>{9de7d1f8-4db5-455a-b004-7bb855f0b1b4}</Project>
-      <Name>Reverse</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WebReferences Include="Web References\" />

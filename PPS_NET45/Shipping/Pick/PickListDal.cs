@@ -6,6 +6,7 @@ using Oracle.ManagedDataAccess.Client;
 using System.Linq;
 using System.Text;
 using NPOI.SS.Util;
+using PickList.Entitys;
 
 namespace PickList
 {
@@ -1254,11 +1255,12 @@ namespace PickList
         {
             string sql = string.Empty;
 
-            sql = string.Format(@"select decode('{0}',carton_no,'1',customer_sn, '0',pallet_no,'2') CartonFlag, carton_no, pick_pallet_no 
+            sql = string.Format(@"select decode('{0}',carton_no,'1',customer_sn, '0',pallet_no,'2') CartonFlag, carton_no, pick_pallet_no, shipment_id 
                                     from ppsuser.t_sn_status where 
                                     (carton_no='{0}'
                                     or customer_sn='{0}'
-                                    or pallet_no='{0}')
+                                    or pallet_no='{0}'
+                                    or pick_pallet_no='{0}')
                                     and rownum=1", inputSno);
             DataSet dataSet = new DataSet();
             try
@@ -1780,6 +1782,28 @@ namespace PickList
                 return null;
             }
             return data;
+        }
+
+        public ExecuteResult GetWarningSNShipExec(string inputsn)
+        {
+            var res = new ExecuteResult();
+            string sql = string.Format(@"SELECT DISTINCT tss.SHIPMENT_ID, tss.PICK_PALLET_NO, tss.CARTON_NO, DECODE(tur.CARTON_NO, null, '0','1') UPS_FLAG  
+                                from PPSUSER.T_SN_STATUS tss
+                                join PPSUSER.T_SHIPMENT_INFO tsi on tss.SHIPMENT_ID = tsi.SHIPMENT_ID
+                                left join PPSUSER.T_UPS_RAWDATA tur on tss.CARTON_NO = tur.CARTON_NO
+                                where (PICK_PALLET_NO='{0}' or tss.CARTON_NO='{1}')
+                                and tsi.STATUS not in ('WS','SF') and tsi.CARRIER_CODE like '%UPS%'", inputsn, inputsn);
+            try
+            {
+                res.Anything = ClientUtils.ExecuteSQL(sql).Tables[0];
+                res.Status = true;
+            }
+            catch (Exception e)
+            {
+                res.Message = e.Message;
+                res.Status = false;
+            }
+            return res;
         }
 
 

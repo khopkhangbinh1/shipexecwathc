@@ -32,6 +32,7 @@ namespace RollbackDN.Wcf
     public class UserContext
     {
         public string CompanyId { get; set; }
+        public string SiteId { get; set; }
         public string Machine { get; set; }
     }
 }
