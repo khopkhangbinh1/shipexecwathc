@@ -1574,9 +1574,9 @@ namespace PickList
             DataTable dt = new DataTable();
             try
             {
-                string msg = CreateTrackingNo();
-                if (!String.IsNullOrWhiteSpace(msg))
-                    throw new Exception(msg);
+                //string msg = CreateTrackingNo();
+                //if (!String.IsNullOrWhiteSpace(msg))
+                //    throw new Exception(msg);
                 dt = ClientUtils.ExecuteProc("ppsuser.SP_PICK_CHECKPALLETSTATUS", procParams).Tables[0];
             }
             catch (Exception e1)
