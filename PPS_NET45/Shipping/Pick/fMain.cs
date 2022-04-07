@@ -980,12 +980,8 @@ namespace PickList
 
             string strF = string.Empty;
             bool isPalletFlag = false;
-            #region
-            if (dt.Rows[0]["errmsg"].ToString().Contains("OK"))
+            if (!dt.Rows[0]["errmsg"].ToString().Contains("NG"))
             {
-                this.labqty.Text = dt.Rows[0]["strlbl"].ToString();
-                labqty.Refresh();
-                Ok();
                 PickListBll pb1 = new PickListBll();
                 if (cmbCarrier2.Text.ToUpper().Contains("UPS") && this.IsShipexecFlag)
                 {
@@ -1004,10 +1000,16 @@ namespace PickList
                     }
 
                 }
-
+            }
+            #region
+            if (dt.Rows[0]["errmsg"].ToString().Contains("OK"))
+            {
+                this.labqty.Text = dt.Rows[0]["strlbl"].ToString();
+                labqty.Refresh();
+                Ok();
                 string strResultInsertLog = string.Empty;
                 string strResulterrmsg = string.Empty;
-               // PickListBll pb1 = new PickListBll();
+                PickListBll pb1 = new PickListBll();
                 strResultInsertLog = pb1.PPSInsertWorkLogBy(strCarton, "PICK", strLocalMACADDRESS, out strResulterrmsg);
 
                 txtCarton.Focus();
@@ -1576,7 +1578,7 @@ namespace PickList
             {
                 //string msg = CreateTrackingNo();
                 //if (!String.IsNullOrWhiteSpace(msg))
-                //    throw new Exception(msg); 
+                //    throw new Exception(msg);
                 dt = ClientUtils.ExecuteProc("ppsuser.SP_PICK_CHECKPALLETSTATUS", procParams).Tables[0];
             }
             catch (Exception e1)
@@ -2011,6 +2013,8 @@ namespace PickList
 
             string strPickpalletno = txtPick.Text.Trim();
 
+            PickListBll pb1 = new PickListBll();
+
             if (string.IsNullOrEmpty(strPickpalletno))
             {
                 
@@ -2033,6 +2037,11 @@ namespace PickList
 
                 if (ppl.PrintPickPalletLabel_new(strPickpalletno))
                 {
+                    #region ups shipexec
+                    string msg = "";
+                    if (cmbCarrier2.Text == "UPS" && this.IsShipexecFlag)
+                        pb1.CallShipExecFinish(strPickpalletno, txtSmId.Text.Trim(), ShipExecShow);
+                    #endregion
                     ShowMsg("打印OK", -1);
 
                 }
