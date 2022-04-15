@@ -4915,21 +4915,23 @@ SELECT DN_NO FROM PPSUSER.T_MES_PACKINGLIST WHERE DN_NO=:DNNO "
                                                 AND TSS.CARTON_NO = '{0}') T
                                       where OPP.PART = T.PART_NO
                                          AND (OPP.SUBPACKCODE = T.PACK_CODE OR T.PACK_CODE = OPP.PACKCODE )) as WEIGHT_UNIT,
-                                        (select sum(GROSSWEIGHTKG * t.CARTON_QTY) total_DN
+                                         ( select sum(GROSSWEIGHTKG * t.CARTON_QTY) total_DN
                                        from ppsuser.vw_mpn_info P_VMI,
-                                            (SELECT DISTINCT tpo.ictpn, TSP.PACK_CODE,  tot.CARTON_QTY
-                                               FROM PPSUSER.T_PALLET_ORDER       tpo,
+                                        (select ictpn,PACK_CODE,sum(CARTON_QTY) CARTON_QTY 
+                                        from(
+                                                SELECT DISTINCT tpo.ictpn, TSP.PACK_CODE, tpo.line_item, tot.CARTON_QTY
+                                                FROM PPSUSER.T_PALLET_ORDER       tpo,
                                                     PPSUSER.T_SHIPMENT_PALLET TSP,
-                                              --PPSUSER.T_SHIPMENT_SAWB tsw,
-                                              PPSUSER.T_ORDER_INFO tot,
-                                              PPSUSER.T_ALLO_TRACKINGNO tat
-                                                                  WHERE tpo.PALLET_NO = TSP.PALLET_NO
-                                           -- and tpo.SHIPMENT_ID = tsw.SHIPMENT_ID
-                                            and tot.DELIVERY_NO=tpo.DELIVERY_NO
-                                                                    AND tpo.DELIVERY_NO = tat.DELIVERY_NO
-                                            and tat.CARTON_NO='{0}'
-                                            and	tpo.ICTPN = tot.ICTPN
-                                           ) T
+                                                   -- PPSUSER.T_SHIPMENT_SAWB tsw,
+                                                    PPSUSER.T_ORDER_INFO tot,
+                                                    PPSUSER.T_ALLO_TRACKINGNO tat
+                                                WHERE tpo.PALLET_NO = TSP.PALLET_NO
+                                                   -- and tpo.SHIPMENT_ID = tsw.SHIPMENT_ID
+                                                    and tot.DELIVERY_NO=tpo.DELIVERY_NO
+                                                    AND tpo.DELIVERY_NO = tat.DELIVERY_NO
+                                                    and tpo.ICTPN = tot.ICTPN
+                                                    and tat.CARTON_NO='{0}') 
+                                               group by ictpn,PACK_CODE) T
                                       where P_VMI.ICTPARTNO = T.ictpn
                                         AND P_VMI.PACKCODE = T.PACK_CODE) as TOTAL_WEIGHT,
                                         '' shipment_tracking ,
@@ -5050,21 +5052,23 @@ SELECT DN_NO FROM PPSUSER.T_MES_PACKINGLIST WHERE DN_NO=:DNNO "
                                       where OPP.PART = T.PART_NO
                                         AND (OPP.SUBPACKCODE = T.PACK_CODE OR T.PACK_CODE = OPP.PACKCODE )) as WEIGHT_UNIT,
                              
-                             (select sum(GROSSWEIGHTKG * t.CARTON_QTY) total_DN
+                              ( select sum(GROSSWEIGHTKG * t.CARTON_QTY) total_DN
                                        from ppsuser.vw_mpn_info P_VMI,
-                                            (SELECT DISTINCT tpo.ictpn, TSP.PACK_CODE,  tot.CARTON_QTY
-                                               FROM PPSUSER.T_PALLET_ORDER       tpo,
+                                        (select ictpn,PACK_CODE,sum(CARTON_QTY) CARTON_QTY 
+                                        from(
+                                                SELECT DISTINCT tpo.ictpn, TSP.PACK_CODE, tpo.line_item, tot.CARTON_QTY
+                                                FROM PPSUSER.T_PALLET_ORDER       tpo,
                                                     PPSUSER.T_SHIPMENT_PALLET TSP,
                                                     PPSUSER.T_SHIPMENT_SAWB tsw,
                                                     PPSUSER.T_ORDER_INFO tot,
                                                     PPSUSER.T_ALLO_TRACKINGNO tat
-                                              WHERE tpo.PALLET_NO = TSP.PALLET_NO
-                                                and tpo.SHIPMENT_ID = tsw.SHIPMENT_ID
-                                                and tot.DELIVERY_NO=tpo.DELIVERY_NO
-                                                AND tpo.DELIVERY_NO = tat.DELIVERY_NO
-                        and tat.CARTON_NO='{0}'
-                        and	tpo.ICTPN = tot.ICTPN
-                       ) T
+                                                WHERE tpo.PALLET_NO = TSP.PALLET_NO
+                                                    and tpo.SHIPMENT_ID = tsw.SHIPMENT_ID
+                                                    and tot.DELIVERY_NO=tpo.DELIVERY_NO
+                                                    AND tpo.DELIVERY_NO = tat.DELIVERY_NO
+                                                    and tpo.ICTPN = tot.ICTPN
+                                                    and tat.CARTON_NO='{0}') 
+                                               group by ictpn,PACK_CODE) T
                                       where P_VMI.ICTPARTNO = T.ictpn
                                         AND P_VMI.PACKCODE = T.PACK_CODE) as TOTAL_WEIGHT,
                             t9u.SERVICELEVELID,
