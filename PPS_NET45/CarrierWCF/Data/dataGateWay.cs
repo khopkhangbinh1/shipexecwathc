@@ -32,20 +32,29 @@ namespace CarrierWCF.Data
         /// <param name="boolRes">交互结果</param>
         /// <param name="strRes">交互信息</param>
         /// <param name="owner">方向</param>
-        public void WriteLog(string Origin_data, string interfaceName, bool boolRes, string strRes, string owner, string action_name, string carton_id = "")
+        public void WriteLog(string Origin_data, string interfaceName, bool boolRes, string strRes, string owner, string action_name, string IN_GUID, string carton_id = "")
         {
             dbparam = new DBParameter();
             string sql = @"insert into ppsuser.i_interface_log 
-                                (Origin_data,interface_name,status,result_message,create_date,owner,action_name,CARTON_ID)
+                                (Origin_data,interface_name,status,create_date,owner,action_name,CARTON_ID,IN_GUID)
                                  values
-                                 (:Origin_data,:interface_name,:status,:result_message,sysdate,:owner,:action_name,:CARTON_ID)";
+                                 (:Origin_data,:interface_name,:status,sysdate,:owner,:action_name,:CARTON_ID,:IN_GUID)";
+
+            if (strRes != "")
+            {
+                sql = @"insert into ppsuser.i_interface_log 
+                                (Origin_data,interface_name,status,result_message,create_date,owner,action_name,CARTON_ID,IN_GUID)
+                                 values
+                                 (:Origin_data,:interface_name,:status,:result_message,sysdate,:owner,:action_name,:CARTON_ID,:IN_GUID)";
+                dbparam.Add("result_message", OracleType.Clob, null);
+            }
             dbparam.Add("Origin_data", OracleType.Clob, Origin_data);
             dbparam.Add("interface_name", OracleType.VarChar, interfaceName);
             dbparam.Add("status", OracleType.VarChar, boolRes);
-            dbparam.Add("result_message", OracleType.Clob, strRes);
             dbparam.Add("owner", OracleType.VarChar, owner);
             dbparam.Add("action_name", OracleType.VarChar, action_name);
             dbparam.Add("CARTON_ID", OracleType.VarChar, carton_id);
+            dbparam.Add("IN_GUID", OracleType.VarChar, IN_GUID);
             dbTool.ExecuteUpdate(sql, dbparam.GetParameters());
         }
 
@@ -221,6 +230,17 @@ namespace CarrierWCF.Data
             dbparam.Add("PARA_TYPE", OracleType.VarChar, paraType);
             exeRes = dbtrans.ExecuteQueryDS(qry, dbparam.GetParameters());
             return exeRes;
+        }
+
+        public void WriteUpdateLog(bool boolRes, string strRes, string IN_GUID)
+        {
+            dbparam = new DBParameter();
+            string sql = @"Update ppsuser.i_interface_log set status = :status,  result_message = :result_message, starttime = sysdate
+                            where IN_GUID = :IN_GUID and INTERFACE_NAME = 'SHIP'";
+            dbparam.Add("status", OracleType.VarChar, boolRes);
+            dbparam.Add("result_message", OracleType.Clob, strRes);
+            dbparam.Add("IN_GUID", OracleType.VarChar, IN_GUID);
+            dbTool.ExecuteUpdate(sql, dbparam.GetParameters());
         }
     }
 }

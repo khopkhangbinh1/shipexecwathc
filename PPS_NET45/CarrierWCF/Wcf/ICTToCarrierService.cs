@@ -22,6 +22,7 @@
         private corebridge core;
         private DBTools.ExecutionResult exeRes;
         private const int LOOP_COUT = 3;
+        private string strGUID = System.Guid.NewGuid().ToString().ToUpper();
 
         public ICTToCarrierService()
         {
@@ -135,6 +136,9 @@
             {
                 bool isDuplicate = false;
                 //model = JsonConvert.DeserializeObject<ShipModel>(data);
+                this.core.WriteLog(JsonConvert.SerializeObject(model), "SHIP", exeRes.Status, "",
+                    "ICT-UPS", model.ShipmentRequest.PackageDefaults.ShipperReference, strGUID, model.ShipmentRequest.Packages[0].MiscReference5);
+
                 model2 = this.callAPI<ShipOutputModel>(ServiceUrl + "/Ship", JsonConvert.DeserializeObject<JObject>(JsonConvert.SerializeObject(model)).ToObject<object>());
                 if (!model2.ErrorCode.Equals(0))
                 {
@@ -148,7 +152,7 @@
                         )
                     {
                         isDuplicate = true;
-                        var objSearch = JsonConvert.DeserializeObject<ExecutionResult>(GetGlbMSNByTrackingNo(model));
+                        var objSearch = JsonConvert.DeserializeObject<ExecutionResult>(GetGlbMSNByTrackingNo(model, strGUID));
                         if (objSearch.Status)
                         {
                             var rawObj = new UPSRawDataEntity()
@@ -160,7 +164,7 @@
                                 ClientAccessCredentials = model.ClientAccessCredentials,
                                 UserContext = model.UserContext
                             };
-                            var reReq = RePrint(JsonConvert.SerializeObject(rawObj));
+                            var reReq = RePrint(JsonConvert.SerializeObject(rawObj), strGUID);
                             if (reReq != "OK")
                             {
                                 exeRes.Status = false;
@@ -231,9 +235,10 @@
             }
             finally
             {
-                this.core.WriteLog(JsonConvert.SerializeObject(model), "SHIP", exeRes.Status, exeRes.Status ? JsonConvert.SerializeObject(model2) : exeRes.Message,
-                    "ICT-UPS", model.ShipmentRequest.PackageDefaults.ShipperReference, model.ShipmentRequest.Packages[0].MiscReference5);
+                //this.core.WriteLog(JsonConvert.SerializeObject(model), "SHIP", exeRes.Status, exeRes.Status ? JsonConvert.SerializeObject(model2) : exeRes.Message,
+                //    "ICT-UPS", model.ShipmentRequest.PackageDefaults.ShipperReference, model.ShipmentRequest.Packages[0].MiscReference5);
                 //this.core.WriteLog(data, "SHIP", exeRes.Status, exeRes.Status ? JsonConvert.SerializeObject(model2) : exeRes.Message, "ICT-UPS", model.ShipmentRequest.PackageDefaults.ShipperReference);
+                this.core.WriteUpdateLog(exeRes.Status, exeRes.Status ? JsonConvert.SerializeObject(model2) : exeRes.Message, strGUID);
             }
             return exeRes.Message;
         }
@@ -276,7 +281,7 @@
             }
             finally
             {
-                this.core.WriteLog(JsonConvert.SerializeObject(objTemp), "VOID", exeRes.Status, exeRes.Status ? JsonConvert.SerializeObject(Res) : exeRes.Message, "ICT-UPS", "");
+                this.core.WriteLog(JsonConvert.SerializeObject(objTemp), "VOID", exeRes.Status, exeRes.Status ? JsonConvert.SerializeObject(Res) : exeRes.Message, "ICT-UPS", "", strGUID, "");
             }
             return exeRes.Message;
         }
@@ -290,7 +295,7 @@
             }
         }
 
-        public string GetGlbMSNByTrackingNo(ShipModel model)
+        public string GetGlbMSNByTrackingNo(ShipModel model, string strGUID)
         {
             exeRes = new ExecutionResult { Status = true, Message = "OK" };
             SearchRequestModel Mdel = new SearchRequestModel()
@@ -350,11 +355,11 @@
             }
             finally
             {
-                this.core.WriteLog(JsonConvert.SerializeObject(Mdel), "UPS_SEARCH", exeRes.Status, exeRes.Status ? JsonConvert.SerializeObject(Mdel2) : exeRes.Message, "ICT-UPS", "");
+                this.core.WriteLog(JsonConvert.SerializeObject(Mdel), "UPS_SEARCH", exeRes.Status, exeRes.Status ? JsonConvert.SerializeObject(Mdel2) : exeRes.Message, "ICT-UPS", "", strGUID);
             }
             return JsonConvert.SerializeObject(exeRes);
         }
-        public string RePrint(string data)
+        public string RePrint(string data, string strGUID)
         {
             exeRes = new ExecutionResult { Status = true, Message = "OK" };
             RePrintResponseModel Mdel2 = new RePrintResponseModel();
@@ -389,7 +394,7 @@
             }
             finally
             {
-                this.core.WriteLog(JsonConvert.SerializeObject(Mdel), "UPS_REPRINT", exeRes.Status, exeRes.Status ? JsonConvert.SerializeObject(Mdel2) : exeRes.Message, "ICT-UPS", "");
+                this.core.WriteLog(JsonConvert.SerializeObject(Mdel), "UPS_REPRINT", exeRes.Status, exeRes.Status ? JsonConvert.SerializeObject(Mdel2) : exeRes.Message, "ICT-UPS", "", strGUID);
             }
             return exeRes.Message;
         }

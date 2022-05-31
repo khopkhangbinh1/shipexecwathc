@@ -21,10 +21,10 @@ namespace CarrierWCF.Wcf
         string Void(string data);
 
         [OperationContract]
-        string GetGlbMSNByTrackingNo(ShipModel model);
+        string GetGlbMSNByTrackingNo(ShipModel model, string GUID);
 
         [OperationContract]
-        string RePrint(string data);
+        string RePrint(string data, string GUID);
 
         [OperationContract]
         string ShipDevTest(string data);

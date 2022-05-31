@@ -121,12 +121,15 @@ namespace RollbackDN
             string strResult = string.Empty;
             string strResulterrmsg = string.Empty;
             string upsMSG = string.Empty;
+            string checkshipmentcancel = string.Empty;
             //string checkEnable = "";
             btnRollback.Enabled = false;
+            RollbackBll pb = new RollbackBll();
             CheckUPS_shipment chk = new CheckUPS_shipment();
             checkUPSshipment = chk.UPSCheck(strSID);
+            checkshipmentcancel = pb.CheckShipmentcancel(strSID, "CANCEL");
 
-            if (checkUPSshipment.Equals("OK"))
+            if (checkUPSshipment.Equals("OK") && checkshipmentcancel.Equals("OK"))
             {
                 if (chk.CheckUPSEnable())
                 {
@@ -142,7 +145,7 @@ namespace RollbackDN
                 }
             }
 
-            RollbackBll pb = new RollbackBll();
+            
             strResult = pb.RBShipmentID2(strSID, out strResulterrmsg);
             if (strResult.Equals("NG"))
             {

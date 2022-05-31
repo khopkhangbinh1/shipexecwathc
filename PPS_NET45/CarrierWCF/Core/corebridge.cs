@@ -49,10 +49,16 @@ namespace CarrierWCF.Core
             }
             return str;
         }
-        public void WriteLog(string Origin_data, string interfaceName, bool boolRes, string strRes, string owner, string action_name, string carton_id = "")
+        public void WriteLog(string Origin_data, string interfaceName, bool boolRes, string strRes, string owner, string action_name, string GUID, string carton_id = "")
         {
             dgw = new dataGateWay(DBAddr);
-            dgw.WriteLog(Origin_data, interfaceName, boolRes, strRes, owner, action_name, carton_id);
+            dgw.WriteLog(Origin_data, interfaceName, boolRes, strRes, owner, action_name, GUID, carton_id);
+        }
+
+        public void WriteUpdateLog(bool boolRes, string strRes, string GUID)
+        {
+            dgw = new dataGateWay(DBAddr);
+            dgw.WriteUpdateLog(boolRes, strRes, GUID);
         }
 
         public ExecutionResult InsertResponseData(ShipModel shipModel, ShipOutputModel shipOutputModel)
